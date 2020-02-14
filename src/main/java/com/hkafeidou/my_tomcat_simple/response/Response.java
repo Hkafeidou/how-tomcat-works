@@ -5,13 +5,21 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.util.Locale;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.ServletResponse;
 
 import com.hkafeidou.my_tomcat_infrastructure.infrstructure.my_const.HttpServerConst;
 import com.hkafeidou.my_tomcat_simple.request.Request;
 
-public class Response {
+public class Response implements ServletResponse {
     Request request;
     OutputStream output = null;
+    PrintWriter writer = null;
+    
     public Response(OutputStream output) {
         super();
         this.output = output;
@@ -57,5 +65,110 @@ public class Response {
             }
         }
     }
+
+    @Override
+    public String getCharacterEncoding() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String getContentType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ServletOutputStream getOutputStream() throws IOException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * return the wirter
+     */
+    @Override
+    public PrintWriter getWriter() throws IOException {
+        // TODO Auto-generated method stub
+        if(null == writer) {
+            writer = new PrintWriter(output, true);
+        }
+        
+        return writer;
+    }
+
+    @Override
+    public void setCharacterEncoding(String charset) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setContentLength(int len) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setContentLengthLong(long len) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setContentType(String type) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setBufferSize(int size) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public int getBufferSize() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public void flushBuffer() throws IOException {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void resetBuffer() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public boolean isCommitted() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public void reset() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setLocale(Locale loc) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public Locale getLocale() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+   
+    
     
 }

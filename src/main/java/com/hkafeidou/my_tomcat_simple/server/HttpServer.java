@@ -9,6 +9,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import com.hkafeidou.my_tomcat_infrastructure.infrstructure.my_const.HttpServerConst;
+import com.hkafeidou.my_tomcat_simple.processor.IProcessor;
+import com.hkafeidou.my_tomcat_simple.processor.ServletProcessor;
+import com.hkafeidou.my_tomcat_simple.processor.StaticResourceProcessor;
 import com.hkafeidou.my_tomcat_simple.request.Request;
 import com.hkafeidou.my_tomcat_simple.response.Response;
 
@@ -42,7 +45,16 @@ public class HttpServer {
                 
                 Response response = new Response(output);
                 response.setRequest(request);
-                response.sendStaticResource();
+                IProcessor processor = null;
+                //choose processor
+                if(request.getUri().startsWith("/servlet/")) {
+                    processor = new ServletProcessor();
+                }else {
+                    processor = new StaticResourceProcessor();
+                }
+//                response.sendStaticResource();
+                
+                processor.process(request, response);
                 socket.close();
                 
                 shutdown=request.getUri().equals(HttpServerConst.DEFAULT_SHUTDOWN_COMMAND);
