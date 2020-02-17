@@ -14,8 +14,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import com.hkafeidou.my_tomcat_infrastructure.infrstructure.my_const.HttpServerConst;
+import com.hkafeidou.my_tomcat_simple.request.HttpRequest;
 import com.hkafeidou.my_tomcat_simple.request.Request;
 import com.hkafeidou.my_tomcat_simple.request.RequestFacade;
+import com.hkafeidou.my_tomcat_simple.response.HttpResponse;
 import com.hkafeidou.my_tomcat_simple.response.Response;
 import com.hkafeidou.my_tomcat_simple.response.ResponseFacade;
 
@@ -24,10 +26,13 @@ public class ServletProcessor implements IProcessor {
     @Override
     public void process(ServletRequest request, ServletResponse response) {
         // TODO Auto-generated method stub
-        Request req = (Request)request;
-        Response resp = (Response)response;
+//        Request req = (Request)request;
+//        Response resp = (Response)response;
         
-        String uri = req.getUri();//形如：/servlet/myservletName
+        HttpRequest req = (HttpRequest)request;
+        HttpResponse resp = (HttpResponse)response;
+        
+        String uri = req.getRequestURI();//形如：/servlet/myservletName
         String servletName = uri.substring(uri.lastIndexOf("/")+1);
         URLClassLoader loader = null;
         //load class loader

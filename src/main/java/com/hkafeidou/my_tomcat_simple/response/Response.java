@@ -10,13 +10,16 @@ import java.io.Writer;
 import java.util.Locale;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import com.hkafeidou.my_tomcat_infrastructure.infrstructure.my_const.HttpServerConst;
+import com.hkafeidou.my_tomcat_simple.request.HttpRequest;
 import com.hkafeidou.my_tomcat_simple.request.Request;
 
 public class Response implements ServletResponse {
-    Request request;
+    //Request request;
+    HttpRequest request;
     OutputStream output = null;
     PrintWriter writer = null;
     
@@ -28,8 +31,8 @@ public class Response implements ServletResponse {
     /**
      * @param request the request to set
      */
-    public void setRequest(Request request) {
-        this.request = request;
+    public void setRequest(ServletRequest request) {
+        this.request = (HttpRequest)request;
     }
     
     
@@ -37,7 +40,7 @@ public class Response implements ServletResponse {
         byte[] bytes = new byte[HttpServerConst.DEFAULT_BUFF_SIZE];
         FileInputStream fileStream = null;
         try {
-            File file = new File(HttpServerConst.DEFAULT_WEB_ROOT,request.getUri());
+            File file = new File(HttpServerConst.DEFAULT_WEB_ROOT,request.getRequestURI());
             if(file.exists()) {
                 fileStream = new FileInputStream(file);
                 int ch = fileStream.read(bytes,0,HttpServerConst.DEFAULT_BUFF_SIZE);
